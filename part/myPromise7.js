@@ -154,15 +154,15 @@ myPromise.prototype.catch = function(onRejected) {
 }
 
 //race方法
-Promise.race = function(promises) {
-    return new Promise((resolve, reject) => {
+myPromise.race = function(promises) {
+    return new myPromise((resolve, reject) => {
         for (let i = 0; i < promises.length; i++) {
             promises[i].then(resolve, reject)
         };
     })
 }
 //all方法(获取所有的promise，都执行then，把结果放到数组，一起返回) 
-Promise.all = function(promises) {
+myPromise.all = function(promises) {
     let arr = [];
     let i = 0;
 
@@ -173,11 +173,24 @@ Promise.all = function(promises) {
             resolve(arr);
         };
     };
-    return new Promise((resolve, reject) => {
+    return new myPromise((resolve, reject) => {
         for (let i = 0; i < promises.length; i++) {
             promises[i].then(data => {
                 processData(i, data, resolve);
             }, reject);
         };
     });
-}
+};
+
+// 目前是通过他测试 他会测试一个对象
+// 语法糖
+myPromise.defer = myPromise.deferred = function() {
+    let dfd = {}
+    dfd.promise = new myPromise((resolve, reject) => {
+        dfd.resolve = resolve;
+        dfd.reject = reject;
+    });
+    return dfd;
+};
+
+module.exports = myPromise;
