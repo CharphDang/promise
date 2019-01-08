@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./es6Promise.js"></script>
+    <script>
+    let promise1 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(1);
+        }, 0);
+    });
+    let promise2 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(2);
+        }, 0);
+    });
+
+    // promise1.then((data) => {
+    //     console.log(data, 'datadatadata1111111111111');
+    //     return Promise.resolve(data);
+    // }).then((data) => {
+    //     console.log(data, 'datadatadata222222222222');
+    //     // return Promise.resolve(data);
+    // });
+    Promise.all([promise1, promise2]).then((value) => {
+        console.log(value);
+    });
+    </script>
+</body>
+
+</html>
